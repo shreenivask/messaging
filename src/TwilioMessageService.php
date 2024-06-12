@@ -22,7 +22,7 @@ class TwilioMessageService implements MessageService
     }
 
     /**
-     * Send message
+     * Send message from Twilio API
      */
     public function sendMessage(string $message, string $to, string $type): array
     {
@@ -31,8 +31,6 @@ class TwilioMessageService implements MessageService
         try {
             $from = $this->from;
             $numberType = (!empty($type) && $type == "whatsapp") ? $type . ":" : "";
-
-            Log::info("Sending message from " . $type);
 
             $message = $this->client->messages
                 ->create(
@@ -43,16 +41,10 @@ class TwilioMessageService implements MessageService
                     )
                 );
 
-
             $responseMessage = "Message sent successfully. Response status: " . $message->status . ", sid: " . $message->sid;
-            Log::info($responseMessage);
-
             $response = array('staus' => 'success', 'message' => $responseMessage);
-
         } catch (Exception $e) {
             $responseMessage = "Message send failed. Error : " . $e->getMessage();
-            Log::error($responseMessage);
-
             $response = array('staus' => 'failure', 'message' => $responseMessage);
         }
 
