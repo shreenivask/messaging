@@ -10,7 +10,7 @@ class WhatsappMessageService
     /**
      * Send Whatsapp message service
      */
-    public function sendMessage(string $message, string $to, string $type = "whatsapp", Twilio $twilio): array
+    public function sendTwilioMessage(string $message, string $to, string $type = "whatsapp", Twilio $twilio): array
     {
         $sid = $twilio->getSid();
         $token = $twilio->getToken();
